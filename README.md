@@ -1,14 +1,19 @@
+[![Pub](https://img.shields.io/pub/v/input_slider.svg)](https://pub.dev/packages/input_slider)
+
 # input_slider
 
-A Slider combined with a TextInputField
+While Sliders offer a quick and visual way to change a value, it can be hard to achieve precise inputs with them. Additionally, some users really dislike Sliders, and especially on small devices they can get quite fiddly. One way to use the advantages of having a Slider while minimizing the drawbacks is to add an additional alternativ (text) input field.
 
-## Getting Started
+This packages InputSlider combines a TextField with a Slider and synchronizes both of them. They share the same minimum and maximum values and changes to one also changes the other. Optionally, you can also specify a leading widget, such as a label Text or Icon. 
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+## Usage
+```dart 
+InputSlider(
+  onChange: (value) => print("change: $value"),
+  min: 0.0,
+  max: 100.0,
+  decimalPlaces: 0,
+  value: 50.0,
+  leading: Text("Percentage:"),
+)
+```
