@@ -139,6 +139,7 @@ class _InputSliderState extends State<InputSlider> {
                 this.value = parsedValue;
               });
               _setControllerValue(this.value);
+              widget.onChangeEnd?.call(this.value);
             },
             textAlign: TextAlign.center,
             decoration: widget.inputDecoration ??
@@ -182,7 +183,6 @@ class _InputSliderState extends State<InputSlider> {
                 this.value = value;
               });
               _setControllerValue(value);
-              widget.onChange.call(value);
             },
           ),
         )
