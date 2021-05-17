@@ -163,6 +163,7 @@ class _InputSliderState extends State<InputSlider> {
                           color: widget.focusBorderColor ??
                               Theme.of(context).primaryColor)),
                   filled: widget.filled,
+                  fillColor: widget.fillColor,
                   contentPadding: EdgeInsets.only(top: 5),
                 ),
           ),
