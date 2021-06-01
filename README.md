@@ -20,3 +20,37 @@ InputSlider(
   leading: Text("Percentage:"),
 )
 ```
+
+## Input Slider Forms
+
+You can group multiple InputSlider together using an InputSliderForm. By specifying `leadingWeight` and `sliderWeight` it is possible to align them together. They can be also styled together or individually. 
+
+```dart
+InputSliderForm(
+    leadingWeight: 1,
+    sliderWeight: 3,
+    activeSliderColor: Colors.red,
+    inactiveSliderColor: Colors.green[100],
+    filled: true,
+    children: [
+      InputSlider(
+        onChange: (value) {
+          print("Setting 1 changed");
+        },
+        min: 0.0,
+        max: 10.0,
+        decimalPlaces: 0,
+        defaultValue: 5.0,
+        leading: Text("Setting 1:"),
+      ),
+      InputSlider(
+        onChange: (value) {
+          print("Setting 2 changed");
+        },
+        min: 0.0,
+        max: 1.0,
+        decimalPlaces: 3,
+        defaultValue: 0.32,
+      ),
+)
+```

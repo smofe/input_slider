@@ -1,6 +1,6 @@
 name: input_slider
 description: A customizable input that synchronizes a Slider and a TextField.
-version: 0.1.4
+version: 0.2.0
 repository: https://github.com/smofe/input_slider
 
 environment:

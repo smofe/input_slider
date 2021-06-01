@@ -1,3 +1,9 @@
+## [0.2.0] - 01.06.2021
+
+- Adds leadingWeight and sliderWeight 
+- Adds InputSliderForm which allows to group, align and style InputSliders together
+- BREAKING: Changes value to defaultValue
+
 ## [0.1.4] - 17.05.2021
 
 - Fixes bug with onChange Function
