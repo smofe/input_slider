@@ -1,3 +1,7 @@
+## [0.2.1] - 02.06.2021
+
+- Fixes wrong assertion for default value
+
 ## [0.2.0] - 01.06.2021
 
 - Adds leadingWeight and sliderWeight 

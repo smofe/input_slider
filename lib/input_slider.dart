@@ -118,7 +118,8 @@ class InputSlider extends StatefulWidget {
       : super();
 
   @override
-  _InputSliderState createState() => _InputSliderState(defaultValue: defaultValue, textFieldSize: this.textFieldSize);
+  _InputSliderState createState() => _InputSliderState(
+      defaultValue: defaultValue, textFieldSize: this.textFieldSize);
 }
 
 class _InputSliderState extends State<InputSlider> {
@@ -130,7 +131,7 @@ class _InputSliderState extends State<InputSlider> {
 
   @override
   void initState() {
-    assert(defaultValue > widget.min && defaultValue < widget.max,
+    assert(defaultValue >= widget.min && defaultValue <= widget.max,
         "value must be between min and max.");
     _controller = TextEditingController(
         text: defaultValue.toStringAsFixed(widget.decimalPlaces));
@@ -161,7 +162,8 @@ class _InputSliderState extends State<InputSlider> {
               style:
                   widget.textFieldStyle ?? DefaultTextStyle.of(context).style,
               onSubmitted: (value) {
-                double parsedValue = double.tryParse(value) ?? this.defaultValue;
+                double parsedValue =
+                    double.tryParse(value) ?? this.defaultValue;
                 parsedValue = parsedValue.clamp(widget.min, widget.max);
                 setState(() {
                   this.defaultValue = parsedValue;
@@ -240,6 +242,4 @@ class _InputSliderState extends State<InputSlider> {
     });
     widget.onChange.call(value);
   }
-
-
 }
