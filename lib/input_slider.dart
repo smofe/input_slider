@@ -141,7 +141,6 @@ class _InputSliderState extends State<InputSlider> {
   @override
   Widget build(BuildContext context) {
     if (textFieldSize == null) _calculateTextFieldSize();
-    print(textFieldSize);
     return Row(
       children: [
         Flexible(

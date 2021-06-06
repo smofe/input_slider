@@ -1,3 +1,7 @@
+## [0.2.2] - 02.06.2021
+
+- Removes unnecessary print statement
+
 ## [0.2.1] - 02.06.2021
 
 - Fixes wrong assertion for default value
