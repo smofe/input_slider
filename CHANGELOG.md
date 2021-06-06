@@ -1,4 +1,8 @@
-## [0.2.2] - 02.06.2021
+## [0.2.3] - 06.06.2021
+
+- TextEditingController is now properly disposed
+
+## [0.2.2] - 06.06.2021
 
 - Removes unnecessary print statement
 

@@ -131,11 +131,17 @@ class _InputSliderState extends State<InputSlider> {
 
   @override
   void initState() {
+    super.initState();
     assert(defaultValue >= widget.min && defaultValue <= widget.max,
         "value must be between min and max.");
     _controller = TextEditingController(
         text: defaultValue.toStringAsFixed(widget.decimalPlaces));
-    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
