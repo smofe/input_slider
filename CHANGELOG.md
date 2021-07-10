@@ -1,3 +1,7 @@
+## [0.3.0] - 10.07.2021
+
+- Adds vertical slider support: Set vertical=true to rotate the Slider by 90 degrees. 
+
 ## [0.2.3] - 06.06.2021
 
 - TextEditingController is now properly disposed

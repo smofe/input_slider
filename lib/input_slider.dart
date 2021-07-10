@@ -93,6 +93,15 @@ class InputSlider extends StatefulWidget {
   /// If null, calculates the size based on the [textFieldStyle] and [decimalPlaces].
   final Size? textFieldSize;
 
+  /// If true, rotates the [Slider] by 90 degrees. Keeps the orientation of the
+  /// [TextField] and the leading widget. Default is false.
+  ///
+  /// Note: This puts all widgets ([Slider], [TextField] and leading widget) inside a
+  /// Column instead of a row. When using this [InputSlider] inside another Column,
+  /// you have to constrain the height of this [InputSlider] by using widgets such
+  /// as [SizedBox], [Expanded] or [Flexible].
+  final bool vertical;
+
   const InputSlider(
       {required this.onChange,
       required this.min,
@@ -114,7 +123,8 @@ class InputSlider extends StatefulWidget {
       this.inputDecoration,
       this.leadingWeight,
       this.sliderWeight,
-      this.textFieldSize})
+      this.textFieldSize,
+      this.vertical = false})
       : super();
 
   @override
@@ -147,68 +157,70 @@ class _InputSliderState extends State<InputSlider> {
   @override
   Widget build(BuildContext context) {
     if (textFieldSize == null) _calculateTextFieldSize();
-    return Row(
-      children: [
-        Flexible(
-            flex: widget.leadingWeight ?? 0,
-            fit: FlexFit.tight,
-            child: widget.leading ?? Container()),
-        Padding(
-          padding: EdgeInsets.only(left: 8.0),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            width: textFieldSize!.width,
-            height: textFieldSize!.height,
-            child: TextField(
-              controller: _controller,
-              keyboardType: TextInputType.number,
-              style:
-                  widget.textFieldStyle ?? DefaultTextStyle.of(context).style,
-              onSubmitted: (value) {
-                double parsedValue =
-                    double.tryParse(value) ?? this.defaultValue;
-                parsedValue = parsedValue.clamp(widget.min, widget.max);
-                setState(() {
-                  this.defaultValue = parsedValue;
-                });
-                _setControllerValue(this.defaultValue);
-                widget.onChangeEnd?.call(this.defaultValue);
-              },
-              textAlign: TextAlign.center,
-              decoration: widget.inputDecoration ??
-                  InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius:
-                            widget.borderRadius ?? BorderRadius.circular(8),
-                        borderSide: BorderSide(
-                            color: widget.borderColor ??
-                                Theme.of(context).hintColor)),
-                    border: OutlineInputBorder(
-                        borderRadius:
-                            widget.borderRadius ?? BorderRadius.circular(8),
-                        borderSide: BorderSide(
-                            color: widget.borderColor ??
-                                Theme.of(context).hintColor)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius:
-                            widget.borderRadius ?? BorderRadius.circular(8),
-                        borderSide: BorderSide(
-                            width: 2,
-                            color: widget.focusBorderColor ??
-                                Theme.of(context).primaryColor)),
-                    filled: widget.filled,
-                    fillColor: widget.fillColor,
-                    contentPadding: EdgeInsets.only(top: 5),
-                  ),
-            ),
+
+    final widgets = [
+      Flexible(
+          flex: widget.leadingWeight ?? 0,
+          fit: FlexFit.tight,
+          child: Align(
+              alignment: Alignment.centerLeft,
+              child: widget.leading)),
+      Padding(
+        padding: EdgeInsets.only(left: 8.0),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SizedBox(
+          width: textFieldSize!.width,
+          height: textFieldSize!.height,
+          child: TextField(
+            controller: _controller,
+            keyboardType: TextInputType.number,
+            style: widget.textFieldStyle ?? DefaultTextStyle.of(context).style,
+            onSubmitted: (value) {
+              double parsedValue = double.tryParse(value) ?? this.defaultValue;
+              parsedValue = parsedValue.clamp(widget.min, widget.max);
+              setState(() {
+                this.defaultValue = parsedValue;
+              });
+              _setControllerValue(this.defaultValue);
+              widget.onChangeEnd?.call(this.defaultValue);
+            },
+            textAlign: TextAlign.center,
+            decoration: widget.inputDecoration ??
+                InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius:
+                          widget.borderRadius ?? BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                          color: widget.borderColor ??
+                              Theme.of(context).hintColor)),
+                  border: OutlineInputBorder(
+                      borderRadius:
+                          widget.borderRadius ?? BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                          color: widget.borderColor ??
+                              Theme.of(context).hintColor)),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius:
+                          widget.borderRadius ?? BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                          width: 2,
+                          color: widget.focusBorderColor ??
+                              Theme.of(context).primaryColor)),
+                  filled: widget.filled,
+                  fillColor: widget.fillColor,
+                  contentPadding: EdgeInsets.only(top: 5),
+                ),
           ),
         ),
-        Flexible(
+      ),
+      widget.vertical ? Flexible(
           flex: widget.sliderWeight ?? 1,
           fit: FlexFit.tight,
-          child: Slider(
+          child: RotatedBox(
+            quarterTurns: 1,
+            child: Slider(
             value: defaultValue,
             min: widget.min,
             max: widget.max,
@@ -223,9 +235,36 @@ class _InputSliderState extends State<InputSlider> {
               _setControllerValue(value);
             },
           ),
-        )
-      ],
-    );
+        ),
+      ) : Flexible(
+        flex: widget.sliderWeight ?? 1,
+        fit: FlexFit.tight,
+        child: Slider(
+          value: defaultValue,
+          min: widget.min,
+          max: widget.max,
+          divisions: widget.division,
+          activeColor: widget.activeSliderColor,
+          inactiveColor: widget.inactiveSliderColor,
+          onChangeEnd: widget.onChangeEnd,
+          onChanged: (double value) {
+            setState(() {
+              this.defaultValue = value;
+            });
+            _setControllerValue(value);
+          },
+        ),
+      ),
+    ];
+
+    return (widget.vertical)
+        ? Column(
+            mainAxisSize: MainAxisSize.min,
+            children: widgets,
+          )
+        : Row(
+            children: widgets,
+          );
   }
 
   /// Calculates the size of the TextField input.

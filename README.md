@@ -28,10 +28,11 @@ You can group multiple InputSlider together using an InputSliderForm. By specify
 ```dart
 InputSliderForm(
     leadingWeight: 1,
-    sliderWeight: 3,
+    sliderWeight: 20,
     activeSliderColor: Colors.red,
     inactiveSliderColor: Colors.green[100],
     filled: true,
+    vertical: true,
     children: [
       InputSlider(
         onChange: (value) {
@@ -54,3 +55,8 @@ InputSliderForm(
       ),
 )
 ```
+
+Sliders can be rotated by 90 degrees by setting vertical=true. This can be done to individual InputSliders or to InputSliderForms.
+
+![photo_2021-07-10_13-54-59](https://user-images.githubusercontent.com/44811445/125162105-6f0e2f80-e186-11eb-82f6-2fcccbc3e916.jpg)
+

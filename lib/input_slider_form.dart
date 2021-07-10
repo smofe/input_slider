@@ -66,6 +66,12 @@ class InputSliderForm extends StatelessWidget {
   /// If null the slider is extended.
   final int? sliderWeight;
 
+  /// If true, rotates all [InputSlider] by 90 degrees. Keeps the orientation of the
+  /// [TextField]s and the leading widgets. Default is false.
+  ///
+  /// Note: This puts all [InputSlider] inside a [Row] instead of a [Column].
+  final bool vertical;
+
   const InputSliderForm(
       {Key? key,
       required this.children,
@@ -79,15 +85,15 @@ class InputSliderForm extends StatelessWidget {
       this.fillColor,
       this.textFieldStyle,
       this.inactiveSliderColor,
-      this.activeSliderColor})
+      this.activeSliderColor,
+      this.vertical = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size maxTextFieldSize = _calculateMaxTextFieldSize(context: context);
 
-    return Column(
-        children: children.map((InputSlider slider) {
+    final sliders = children.map((InputSlider slider) {
       return InputSlider(
         onChange: slider.onChange,
         min: slider.min,
@@ -110,8 +116,18 @@ class InputSliderForm extends StatelessWidget {
         leadingWeight: slider.leadingWeight ?? leadingWeight,
         sliderWeight: slider.sliderWeight ?? sliderWeight,
         textFieldSize: maxTextFieldSize,
+        vertical: vertical,
       );
-    }).toList());
+    }).toList();
+
+    return vertical
+        ? Row(
+        mainAxisSize: MainAxisSize.min,
+        children: sliders)
+        : Column(
+            mainAxisSize: MainAxisSize.min,
+            children: sliders,
+          );
   }
 
   /// Calculates the size of the TextField input of [slider].
