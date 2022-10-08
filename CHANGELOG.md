@@ -1,3 +1,7 @@
+## [0.3.1] - 08.10.2022
+
+- Changes textfield keyboard type to allow for decimal point and negative values on iOS.
+
 ## [0.3.0] - 10.07.2021
 
 - Adds vertical slider support: Set vertical=true to rotate the Slider by 90 degrees. 
